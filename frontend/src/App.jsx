@@ -24,7 +24,7 @@ function Layout() {
       <main className="content">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
           <h1 style={{ margin: 0 }}>AI Store</h1>
-          <div style={{ color: '#9db2ff' }}>Signed in as {user?.username}</div>
+          <div style={{ color: '#718096' }}>Signed in as {user?.username}</div>
         </div>
         <Routes>
           <Route path="/" element={<Products />} />

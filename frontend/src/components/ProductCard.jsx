@@ -44,7 +44,7 @@ export default function ProductCard({ product, onAdd }) {
           height: '200px', 
           objectFit: 'cover', 
           borderRadius: '8px',
-          border: '1px solid #1c254a',
+          border: '1px solid #e2e8f0',
           marginBottom: '12px'
         }}
       />

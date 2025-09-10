@@ -166,7 +166,7 @@ export default function ProductDetail() {
                 height: '400px', 
                 objectFit: 'cover', 
                 borderRadius: '8px',
-                border: '1px solid #1c254a'
+                border: '1px solid #e2e8f0'
               }}
             />
           </div>
@@ -174,7 +174,7 @@ export default function ProductDetail() {
           {/* Product Details */}
           <div>
             <h1 style={{ margin: '0 0 16px 0', fontSize: '28px' }}>{product.name}</h1>
-            <div style={{ fontSize: '24px', fontWeight: 600, color: '#9db2ff', marginBottom: 16 }}>
+            <div style={{ fontSize: '24px', fontWeight: 600, color: '#4299e1', marginBottom: 16 }}>
               ${product.price?.toFixed ? product.price.toFixed(2) : product.price}
             </div>
             
@@ -197,7 +197,7 @@ export default function ProductDetail() {
                 </button>
                 <span style={{ 
                   padding: '8px 16px', 
-                  border: '1px solid #1c254a', 
+                  border: '1px solid #e2e8f0', 
                   borderRadius: '4px',
                   minWidth: '60px',
                   textAlign: 'center'
@@ -227,9 +227,9 @@ export default function ProductDetail() {
             {message && (
               <div style={{ 
                 padding: '8px 12px', 
-                backgroundColor: '#1c254a', 
+                backgroundColor: '#edf2f7', 
                 borderRadius: '4px',
-                color: '#9db2ff',
+                color: '#4a5568',
                 textAlign: 'center'
               }}>
                 {message}
@@ -239,17 +239,17 @@ export default function ProductDetail() {
         </div>
 
         {/* Features Section */}
-        <div style={{ marginTop: 32, paddingTop: 24, borderTop: '1px solid #1c254a' }}>
+        <div style={{ marginTop: 32, paddingTop: 24, borderTop: '1px solid #e2e8f0' }}>
           <h3 style={{ marginBottom: 16 }}>Key Features</h3>
           <ul style={{ listStyle: 'none', padding: 0 }}>
             {productDetails.features.map((feature, index) => (
               <li key={index} style={{ 
                 padding: '8px 0', 
-                borderBottom: '1px solid #1c254a',
+                borderBottom: '1px solid #e2e8f0',
                 display: 'flex',
                 alignItems: 'center'
               }}>
-                <span style={{ color: '#9db2ff', marginRight: 8 }}>✓</span>
+                <span style={{ color: '#38a169', marginRight: 8 }}>✓</span>
                 {feature}
               </li>
             ))}
@@ -266,7 +266,7 @@ export default function ProductDetail() {
                   display: 'flex', 
                   justifyContent: 'space-between',
                   padding: '8px 0',
-                  borderBottom: '1px solid #1c254a'
+                  borderBottom: '1px solid #e2e8f0'
                 }}>
                   <span style={{ fontWeight: 600 }}>{key}:</span>
                   <span style={{ opacity: 0.9 }}>{value}</span>

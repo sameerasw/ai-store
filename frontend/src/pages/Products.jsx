@@ -143,7 +143,7 @@ export default function Products() {
             <div className="row" style={{ gap: 8, marginTop: 8 }}>
               <input className="input" placeholder="Coupon (SAVE10, SAVE20, FREESHIP)" value={coupon} onChange={(e)=>setCoupon(e.target.value)} />
               <button className="btn secondary" onClick={applyCoupon}>Apply</button>
-              {appliedCoupon && <div style={{ color: '#9db2ff' }}>Applied: {appliedCoupon}</div>}
+              {appliedCoupon && <div style={{ color: '#38a169' }}>Applied: {appliedCoupon}</div>}
             </div>
 
             <div style={{ marginTop: 8, fontSize: 14 }}>
@@ -163,7 +163,7 @@ export default function Products() {
                 <div>Shipping</div>
                 <div>${shipping.toFixed(2)}</div>
               </div>
-              <hr style={{ borderColor: '#1c254a' }} />
+              <hr style={{ borderColor: '#e2e8f0' }} />
               <div className="row" style={{ justifyContent: 'space-between', fontWeight: 600 }}>
                 <div>Total</div>
                 <div>${total.toFixed(2)}</div>
@@ -173,7 +173,7 @@ export default function Products() {
             <button className="btn" onClick={placeOrder} disabled={ordering}>
               {ordering ? 'Placing...' : 'Place Order'}
             </button>
-            {message && <div style={{ marginTop: 8, color: '#9db2ff' }}>{message}</div>}
+            {message && <div style={{ marginTop: 8, color: '#38a169' }}>{message}</div>}
           </div>
         )}
       </div>

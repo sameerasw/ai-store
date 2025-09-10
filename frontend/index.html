@@ -5,18 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AI Store</title>
     <style>
-      body { margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: #0b1020; color: #e7e9ee; }
+      body { margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: #f8f9fa; color: #2d3748; }
       a { color: inherit; text-decoration: none; }
       .app { display: flex; min-height: 100vh; }
-      .sidebar { width: 240px; background: #0e142b; border-right: 1px solid #1c254a; padding: 16px; box-sizing: border-box; }
-      .sidebar h2 { margin: 0 0 16px; font-size: 18px; color: #9db2ff; }
-      .nav a { display: block; padding: 10px 12px; border-radius: 8px; margin-bottom: 6px; color: #cdd6f4; }
-      .nav a.active, .nav a:hover { background: #1a2246; color: #ffffff; }
+      .sidebar { width: 240px; background: #ffffff; border-right: 1px solid #e2e8f0; padding: 16px; box-sizing: border-box; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+      .sidebar h2 { margin: 0 0 16px; font-size: 18px; color: #4a5568; }
+      .nav a { display: block; padding: 10px 12px; border-radius: 8px; margin-bottom: 6px; color: #718096; }
+      .nav a.active, .nav a:hover { background: #edf2f7; color: #2d3748; }
       .content { flex: 1; padding: 20px; }
-      .card { background: #0e1535; border: 1px solid #1c254a; border-radius: 12px; padding: 16px; }
-      .input { width: 100%; padding: 10px 12px; border-radius: 8px; background: #0a0f24; color: #e7e9ee; border: 1px solid #1c254a; }
-      .btn { background: #335cff; color: #fff; padding: 10px 14px; border: none; border-radius: 8px; cursor: pointer; }
-      .btn.secondary { background: #1a2246; }
+      .card { background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+      .input { width: 100%; padding: 10px 12px; border-radius: 8px; background: #ffffff; color: #2d3748; border: 1px solid #cbd5e0; }
+      .input:focus { outline: none; border-color: #4299e1; box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1); }
+      .btn { background: #4299e1; color: #fff; padding: 10px 14px; border: none; border-radius: 8px; cursor: pointer; }
+      .btn:hover { background: #3182ce; }
+      .btn.secondary { background: #edf2f7; color: #4a5568; }
+      .btn.secondary:hover { background: #e2e8f0; }
       .row { display: flex; gap: 12px; align-items: center; }
       .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
     </style>

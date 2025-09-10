@@ -65,7 +65,7 @@ export default function Orders() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
                     <div style={{ fontWeight: 600 }}>Order #{o.id}</div>
-                    <div>Status: <span style={{ color: '#9db2ff' }}>{o.status}</span></div>
+                    <div>Status: <span style={{ color: '#4299e1' }}>{o.status}</span></div>
                   </div>
                   <button 
                     className="btn secondary"
