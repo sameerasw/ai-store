@@ -32,6 +32,12 @@ export default function Products() {
   }
 
   useEffect(() => {
+    try {
+      localStorage.setItem('cart', JSON.stringify(cart))
+    } catch {}
+  }, [cart])
+
+  useEffect(() => {
     // Initial fetch for products and to build category options
     fetchProducts()
     ;(async () => {
@@ -41,6 +47,14 @@ export default function Products() {
         setCategories(cats)
       } catch (e) {}
     })()
+    // Load cart from localStorage if present
+    try {
+      const raw = localStorage.getItem('cart')
+      if (raw) {
+        const parsed = JSON.parse(raw)
+        if (Array.isArray(parsed)) setCart(parsed)
+      }
+    } catch {}
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -100,6 +114,13 @@ export default function Products() {
       setOrdering(false)
     }
   }
+
+  // Persist cart whenever it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem('cart', JSON.stringify(cart))
+    } catch {}
+  }, [cart])
 
   return (
     <div>

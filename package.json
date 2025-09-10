@@ -4,7 +4,8 @@
   "version": "0.1.0",
   "description": "AI-based e-commerce store monorepo (frontend + backend) with single launcher",
   "scripts": {
-    "start": "node start.js"
+    "start": "node start.js",
+    "smoke:api": "node scripts/api-smoke.js"
   },
   "engines": {
     "node": ">=18"
