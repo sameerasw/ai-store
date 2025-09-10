@@ -3,6 +3,7 @@ import { Routes, Route, NavLink, Navigate, useNavigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './auth'
 import Login from './pages/Login'
 import Products from './pages/Products'
+import ProductDetail from './pages/ProductDetail'
 import Offers from './pages/Offers'
 import Orders from './pages/Orders'
 import Profile from './pages/Profile'
@@ -26,6 +27,7 @@ function Layout() {
         </div>
         <Routes>
           <Route path="/" element={<Products />} />
+          <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/offers" element={<Offers />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/profile" element={<Profile />} />
