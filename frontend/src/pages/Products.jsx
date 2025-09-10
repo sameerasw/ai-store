@@ -1,6 +1,7 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { api } from '../api'
 import ProductCard from '../components/ProductCard'
+import { useCart } from '../context/CartContext'
 
 export default function Products() {
   const [items, setItems] = useState([])
@@ -9,11 +10,24 @@ export default function Products() {
   const [category, setCategory] = useState('') // empty = All
   const [tags, setTags] = useState('') // comma-separated
   const [loading, setLoading] = useState(false)
-  const [cart, setCart] = useState([]) // [{productId, qty, product}]
   const [ordering, setOrdering] = useState(false)
   const [message, setMessage] = useState('')
-  const [coupon, setCoupon] = useState('')
-  const [appliedCoupon, setAppliedCoupon] = useState(null)
+  
+  const {
+    cart,
+    addToCart,
+    removeFromCart,
+    clearCart,
+    coupon,
+    setCoupon,
+    appliedCoupon,
+    applyCoupon,
+    subtotal,
+    discount,
+    tax,
+    shipping,
+    total
+  } = useCart()
 
   const fetchProducts = async () => {
     setLoading(true)
@@ -32,12 +46,6 @@ export default function Products() {
   }
 
   useEffect(() => {
-    try {
-      localStorage.setItem('cart', JSON.stringify(cart))
-    } catch {}
-  }, [cart])
-
-  useEffect(() => {
     // Initial fetch for products and to build category options
     fetchProducts()
     ;(async () => {
@@ -47,55 +55,8 @@ export default function Products() {
         setCategories(cats)
       } catch (e) {}
     })()
-    // Load cart from localStorage if present
-    try {
-      const raw = localStorage.getItem('cart')
-      if (raw) {
-        const parsed = JSON.parse(raw)
-        if (Array.isArray(parsed)) setCart(parsed)
-      }
-    } catch {}
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  const addToCart = (product) => {
-    setCart((c) => {
-      const idx = c.findIndex((x) => x.productId === product.id)
-      if (idx >= 0) {
-        const copy = [...c]
-        copy[idx] = { ...copy[idx], qty: copy[idx].qty + 1 }
-        return copy
-      }
-      return [...c, { productId: product.id, qty: 1, product }]
-    })
-  }
-
-  const removeFromCart = (productId) => setCart((c) => c.filter((x) => x.productId !== productId))
-
-  const subtotal = useMemo(() => cart.reduce((s, x) => s + x.product.price * x.qty, 0), [cart])
-  const discount = useMemo(() => {
-    if (!appliedCoupon) return 0
-    const code = appliedCoupon.toUpperCase()
-    if (code === 'SAVE10') return subtotal * 0.1
-    if (code === 'SAVE20') return subtotal * 0.2
-    return 0
-  }, [appliedCoupon, subtotal])
-  const afterDiscount = Math.max(0, subtotal - discount)
-  const tax = useMemo(() => afterDiscount * 0.08, [afterDiscount]) // 8% tax
-  const shipping = useMemo(() => {
-    const code = (appliedCoupon || '').toUpperCase()
-    if (code === 'FREESHIP' || afterDiscount >= 100) return 0
-    return cart.length > 0 ? 5 : 0
-  }, [appliedCoupon, afterDiscount, cart.length])
-  const total = afterDiscount + tax + shipping
-
-  const applyCoupon = () => {
-    const code = coupon.trim().toUpperCase()
-    if (!code) return setAppliedCoupon(null)
-    const valid = ['SAVE10', 'SAVE20', 'FREESHIP']
-    if (valid.includes(code)) setAppliedCoupon(code)
-    else setAppliedCoupon(null)
-  }
 
   const placeOrder = async () => {
     if (cart.length === 0) return
@@ -103,24 +64,25 @@ export default function Products() {
     setMessage('')
     try {
       const items = cart.map(({ productId, qty }) => ({ productId, qty }))
+      console.log('Placing order with items:', items)
+      console.log('Auth headers:', api.defaults.headers.common)
       const { data } = await api.post('/orders', { items })
-      setCart([])
-      setAppliedCoupon(null)
-      setCoupon('')
+      clearCart()
       setMessage(`Order #${data.id} placed! Status: ${data.status}`)
     } catch (e) {
-      setMessage('Failed to place order (are you logged in?)')
+      console.error('Order placement error:', e.response?.data || e.message)
+      if (e.response?.status === 401) {
+        setMessage('Authentication failed. Please log in again.')
+      } else if (e.response?.status === 400) {
+        setMessage('Invalid order data. Please check your cart.')
+      } else {
+        setMessage('Failed to place order. Please try again.')
+      }
     } finally {
       setOrdering(false)
     }
   }
 
-  // Persist cart whenever it changes
-  useEffect(() => {
-    try {
-      localStorage.setItem('cart', JSON.stringify(cart))
-    } catch {}
-  }, [cart])
 
   return (
     <div>

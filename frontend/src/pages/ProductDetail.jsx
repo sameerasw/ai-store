@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { api } from '../api'
+import { useCart } from '../context/CartContext'
 
 export default function ProductDetail() {
   const { id } = useParams()
   const navigate = useNavigate()
+  const { addToCart } = useCart()
   const [product, setProduct] = useState(null)
   const [loading, setLoading] = useState(true)
   const [quantity, setQuantity] = useState(1)
@@ -102,12 +104,11 @@ export default function ProductDetail() {
     fetchProduct()
   }, [id])
 
-  const addToCart = async () => {
+  const handleAddToCart = async () => {
     setAddingToCart(true)
     setMessage('')
     try {
-      // In a real app, you'd make an API call to add to cart
-      // For now, we'll just show a success message
+      addToCart(product, quantity)
       setMessage(`Added ${quantity} ${product.name}(s) to cart!`)
       setTimeout(() => setMessage(''), 3000)
     } catch (error) {
@@ -216,7 +217,7 @@ export default function ProductDetail() {
             {/* Add to Cart Button */}
             <button 
               className="btn"
-              onClick={addToCart}
+              onClick={handleAddToCart}
               disabled={addingToCart}
               style={{ width: '100%', marginBottom: 16 }}
             >

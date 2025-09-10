@@ -27,6 +27,13 @@ export function AuthProvider({ children }) {
 
   const logout = async () => {
     try { await api.post('/auth/logout') } catch {}
+    
+    // Clear user-specific cart data on logout
+    if (user) {
+      const cartKey = `cart_${user.id || user.username}`
+      localStorage.removeItem(cartKey)
+    }
+    
     setToken(null)
     setUser(null)
     localStorage.removeItem('token')

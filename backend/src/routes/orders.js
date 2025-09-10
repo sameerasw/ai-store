@@ -31,12 +31,15 @@ router.post('/', authRequired, async (req, res) => {
   const { items } = req.body || {};
   if (!Array.isArray(items) || items.length === 0) return res.status(400).json({ error: 'items required' });
   try {
+    console.log('Creating order for user:', req.user.id, 'with items:', items);
     const productsJson = JSON.stringify(items);
     const r = await run('INSERT INTO orders (user_id, products, status) VALUES (?, ?, ?)', [req.user.id, productsJson, 'pending']);
+    console.log('Order created with ID:', r.id);
     const created = await get('SELECT * FROM orders WHERE id = ?', [r.id]);
     res.status(201).json(created);
   } catch (e) {
-    res.status(500).json({ error: 'Failed to create order' });
+    console.error('Order creation error:', e);
+    res.status(500).json({ error: 'Failed to create order', details: e.message });
   }
 });
 

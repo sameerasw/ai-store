@@ -1,6 +1,7 @@
 import React from 'react'
-import { Routes, Route, NavLink, Navigate, useNavigate } from 'react-router-dom'
+import { Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './auth'
+import { CartProvider } from './context/CartContext'
 import Login from './pages/Login'
 import Products from './pages/Products'
 import ProductDetail from './pages/ProductDetail'
@@ -40,17 +41,19 @@ function Layout() {
 export default function App() {
   return (
     <AuthProvider>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route
-          path="/*"
-          element={
-            <ProtectedRoute>
-              <Layout />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
+      <CartProvider>
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/*"
+            element={
+              <ProtectedRoute>
+                <Layout />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+      </CartProvider>
     </AuthProvider>
   )
 }
