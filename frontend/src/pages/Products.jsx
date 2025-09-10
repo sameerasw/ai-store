@@ -5,6 +5,9 @@ import ProductCard from '../components/ProductCard'
 export default function Products() {
   const [items, setItems] = useState([])
   const [q, setQ] = useState('')
+  const [categories, setCategories] = useState([])
+  const [category, setCategory] = useState('') // empty = All
+  const [tags, setTags] = useState('') // comma-separated
   const [loading, setLoading] = useState(false)
   const [cart, setCart] = useState([]) // [{productId, qty, product}]
   const [ordering, setOrdering] = useState(false)
@@ -15,7 +18,11 @@ export default function Products() {
   const fetchProducts = async () => {
     setLoading(true)
     try {
-      const { data } = await api.get('/products', { params: q ? { q } : {} })
+      const params = {}
+      if (q) params.q = q
+      if (category) params.category = category
+      if (tags) params.tags = tags
+      const { data } = await api.get('/products', { params })
       setItems(data)
     } catch (e) {
       // ignore
@@ -25,7 +32,29 @@ export default function Products() {
   }
 
   useEffect(() => {
+    try {
+      localStorage.setItem('cart', JSON.stringify(cart))
+    } catch {}
+  }, [cart])
+
+  useEffect(() => {
+    // Initial fetch for products and to build category options
     fetchProducts()
+    ;(async () => {
+      try {
+        const { data } = await api.get('/products')
+        const cats = Array.from(new Set((data || []).map(p => p.category).filter(Boolean)))
+        setCategories(cats)
+      } catch (e) {}
+    })()
+    // Load cart from localStorage if present
+    try {
+      const raw = localStorage.getItem('cart')
+      if (raw) {
+        const parsed = JSON.parse(raw)
+        if (Array.isArray(parsed)) setCart(parsed)
+      }
+    } catch {}
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -86,12 +115,40 @@ export default function Products() {
     }
   }
 
+  // Persist cart whenever it changes
+  useEffect(() => {
+    try {
+      localStorage.setItem('cart', JSON.stringify(cart))
+    } catch {}
+  }, [cart])
+
   return (
     <div>
       <div className="card" style={{ marginBottom: 16 }}>
-        <div className="row">
-          <input className="input" placeholder="Search products..." value={q} onChange={(e) => setQ(e.target.value)} onKeyDown={(e) => e.key==='Enter' && fetchProducts()} />
-          <button className="btn" onClick={fetchProducts} disabled={loading}>{loading ? 'Loading...' : 'Search'}</button>
+        <div className="row" style={{ flexWrap: 'wrap', gap: 12 }}>
+          <input
+            className="input"
+            placeholder="Search products..."
+            value={q}
+            onChange={(e) => setQ(e.target.value)}
+            onKeyDown={(e) => e.key==='Enter' && fetchProducts()}
+            style={{ flex: 2, minWidth: 220 }}
+          />
+          <select className="input" value={category} onChange={(e)=>setCategory(e.target.value)} style={{ flex: 1, minWidth: 160 }}>
+            <option value="">All Categories</option>
+            {categories.map((c)=> (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
+          <input
+            className="input"
+            placeholder="Tags (comma-separated)"
+            value={tags}
+            onChange={(e)=>setTags(e.target.value)}
+            onKeyDown={(e) => e.key==='Enter' && fetchProducts()}
+            style={{ flex: 1, minWidth: 220 }}
+          />
+          <button className="btn" onClick={fetchProducts} disabled={loading}>{loading ? 'Loading...' : 'Apply'}</button>
         </div>
       </div>
 
