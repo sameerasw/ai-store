@@ -43,4 +43,19 @@ router.post('/', authRequired, async (req, res) => {
   }
 });
 
+// Delete order (only if owner)
+router.delete('/:id', authRequired, async (req, res) => {
+  try {
+    const order = await get('SELECT * FROM orders WHERE id = ?', [req.params.id]);
+    if (!order) return res.status(404).json({ error: 'Order not found' });
+    if (order.user_id !== req.user.id) return res.status(403).json({ error: 'Not authorized to delete this order' });
+    
+    await run('DELETE FROM orders WHERE id = ?', [req.params.id]);
+    res.json({ message: 'Order deleted successfully' });
+  } catch (e) {
+    console.error('Order deletion error:', e);
+    res.status(500).json({ error: 'Failed to delete order' });
+  }
+});
+
 module.exports = router;

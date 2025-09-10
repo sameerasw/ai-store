@@ -5,6 +5,7 @@ export default function Orders() {
   const [orders, setOrders] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
+  const [deletingOrders, setDeletingOrders] = useState(new Set())
 
   const fetchOrders = async () => {
     setLoading(true)
@@ -23,6 +24,24 @@ export default function Orders() {
     fetchOrders()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  const deleteOrder = async (orderId) => {
+    if (!window.confirm('Are you sure you want to delete this order?')) return
+    
+    setDeletingOrders(prev => new Set([...prev, orderId]))
+    try {
+      await api.delete(`/orders/${orderId}`)
+      setOrders(prev => prev.filter(order => order.id !== orderId))
+    } catch (e) {
+      setError('Failed to delete order. Please try again.')
+    } finally {
+      setDeletingOrders(prev => {
+        const newSet = new Set(prev)
+        newSet.delete(orderId)
+        return newSet
+      })
+    }
+  }
 
   return (
     <div>
@@ -43,14 +62,28 @@ export default function Orders() {
             try { items = JSON.parse(o.products) } catch {}
             return (
               <div key={o.id} className="card">
-                <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                  <div style={{ fontWeight: 600 }}>Order #{o.id}</div>
-                  <div>Status: <span style={{ color: '#9db2ff' }}>{o.status}</span></div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                  <div>
+                    <div style={{ fontWeight: 600 }}>Order #{o.id}</div>
+                    <div>Status: <span style={{ color: '#9db2ff' }}>{o.status}</span></div>
+                  </div>
+                  <button 
+                    className="btn secondary"
+                    onClick={() => deleteOrder(o.id)}
+                    disabled={deletingOrders.has(o.id)}
+                    style={{ 
+                      backgroundColor: '#ff6b6b', 
+                      borderColor: '#ff6b6b',
+                      color: 'white'
+                    }}
+                  >
+                    {deletingOrders.has(o.id) ? 'Removing...' : 'Remove'}
+                  </button>
                 </div>
                 <div style={{ fontSize: 12, opacity: 0.8, marginTop: 4 }}>Placed: {o.created_at}</div>
                 <div style={{ marginTop: 8 }}>
                   {items.map((it, idx) => (
-                    <div key={idx} className="row" style={{ justifyContent: 'space-between' }}>
+                    <div key={`${o.id}-${it.productId}-${idx}`} className="row" style={{ justifyContent: 'space-between' }}>
                       <div>Product #{it.productId}</div>
                       <div>Qty: {it.qty}</div>
                     </div>
