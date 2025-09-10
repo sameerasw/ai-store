@@ -1,0 +1,12 @@
+{
+  "name": "ai-store-monorepo",
+  "private": true,
+  "version": "0.1.0",
+  "description": "AI-based e-commerce store monorepo (frontend + backend) with single launcher",
+  "scripts": {
+    "start": "node start.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

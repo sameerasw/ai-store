@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI Store</title>
+    <style>
+      body { margin: 0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; background: #0b1020; color: #e7e9ee; }
+      a { color: inherit; text-decoration: none; }
+      .app { display: flex; min-height: 100vh; }
+      .sidebar { width: 240px; background: #0e142b; border-right: 1px solid #1c254a; padding: 16px; box-sizing: border-box; }
+      .sidebar h2 { margin: 0 0 16px; font-size: 18px; color: #9db2ff; }
+      .nav a { display: block; padding: 10px 12px; border-radius: 8px; margin-bottom: 6px; color: #cdd6f4; }
+      .nav a.active, .nav a:hover { background: #1a2246; color: #ffffff; }
+      .content { flex: 1; padding: 20px; }
+      .card { background: #0e1535; border: 1px solid #1c254a; border-radius: 12px; padding: 16px; }
+      .input { width: 100%; padding: 10px 12px; border-radius: 8px; background: #0a0f24; color: #e7e9ee; border: 1px solid #1c254a; }
+      .btn { background: #335cff; color: #fff; padding: 10px 14px; border: none; border-radius: 8px; cursor: pointer; }
+      .btn.secondary { background: #1a2246; }
+      .row { display: flex; gap: 12px; align-items: center; }
+      .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
