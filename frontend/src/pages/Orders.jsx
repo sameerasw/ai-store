@@ -3,9 +3,19 @@ import { api } from '../api'
 
 export default function Orders() {
   const [orders, setOrders] = useState([])
+  const [products, setProducts] = useState([])
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [deletingOrders, setDeletingOrders] = useState(new Set())
+
+  const fetchProducts = async () => {
+    try {
+      const { data } = await api.get('/products')
+      setProducts(data)
+    } catch (e) {
+      console.error('Failed to fetch products:', e)
+    }
+  }
 
   const fetchOrders = async () => {
     setLoading(true)
@@ -21,6 +31,7 @@ export default function Orders() {
   }
 
   useEffect(() => {
+    fetchProducts()
     fetchOrders()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -77,12 +88,16 @@ export default function Orders() {
                 </div>
                 <div style={{ fontSize: 12, opacity: 0.8, marginTop: 4 }}>Placed: {o.created_at}</div>
                 <div style={{ marginTop: 8 }}>
-                  {items.map((it, idx) => (
-                    <div key={`${o.id}-${it.productId}-${idx}`} className="row" style={{ justifyContent: 'space-between' }}>
-                      <div>Product #{it.productId}</div>
-                      <div>Qty: {it.qty}</div>
-                    </div>
-                  ))}
+                  {items.map((it, idx) => {
+                    const product = products.find(p => p.id === it.productId)
+                    const productName = product ? product.name : `Product #${it.productId}`
+                    return (
+                      <div key={`${o.id}-${it.productId}-${idx}`} className="row" style={{ justifyContent: 'space-between' }}>
+                        <div>{productName}</div>
+                        <div>Qty: {it.qty}</div>
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
             )
