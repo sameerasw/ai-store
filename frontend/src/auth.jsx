@@ -25,6 +25,11 @@ export function AuthProvider({ children }) {
     return data.user
   }
 
+  const updateUser = (updatedUser) => {
+    setUser(updatedUser)
+    localStorage.setItem('user', JSON.stringify(updatedUser))
+  }
+
   const logout = async () => {
     try { await api.post('/auth/logout') } catch {}
     
@@ -41,7 +46,7 @@ export function AuthProvider({ children }) {
     setAuthToken(null)
   }
 
-  const value = useMemo(() => ({ token, user, login, logout }), [token, user])
+  const value = useMemo(() => ({ token, user, login, updateUser, logout }), [token, user])
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
 }
 

@@ -5,6 +5,7 @@ const path = require('path');
 
 const db = require('./src/db');
 const authRoutes = require('./src/routes/auth');
+const profileRoutes = require('./src/routes/profile');
 const productRoutes = require('./src/routes/products');
 const offerRoutes = require('./src/routes/offers');
 const orderRoutes = require('./src/routes/orders');
@@ -20,6 +21,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/auth', authRoutes);
+app.use('/auth', profileRoutes);
 app.use('/products', productRoutes);
 app.use('/offers', offerRoutes);
 app.use('/orders', orderRoutes);
