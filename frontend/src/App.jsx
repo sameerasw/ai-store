@@ -9,6 +9,7 @@ import Offers from './pages/Offers'
 import Orders from './pages/Orders'
 import Profile from './pages/Profile'
 import Sidebar from './components/Sidebar'
+import Logo from './components/Logo'
 
 function ProtectedRoute({ children }) {
   const { token } = useAuth()
@@ -23,15 +24,7 @@ function Layout() {
       <Sidebar />
       <main className="content">
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
-          <h1 style={{ 
-            margin: 0, 
-            background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
-            fontSize: '28px',
-            fontWeight: '700'
-          }}>🛍️ AI Store</h1>
+          <Logo size="medium" />
           <div style={{ 
             color: '#64748b', 
             display: 'flex', 
