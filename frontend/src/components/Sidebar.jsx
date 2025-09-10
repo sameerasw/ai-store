@@ -18,9 +18,6 @@ export default function Sidebar() {
       <h2>AI Store</h2>
       <nav className="nav">
         <NavLink to="/" className={({ isActive }) => (isActive ? 'active' : undefined)}>
-          🏠 Home
-        </NavLink>
-        <NavLink to="/products" className={({ isActive }) => (isActive ? 'active' : undefined)}>
           📦 Products
         </NavLink>
         <NavLink to="/offers" className={({ isActive }) => (isActive ? 'active' : undefined)}>

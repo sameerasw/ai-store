@@ -9,6 +9,8 @@ export default function Products() {
   const [cart, setCart] = useState([]) // [{productId, qty, product}]
   const [ordering, setOrdering] = useState(false)
   const [message, setMessage] = useState('')
+  const [coupon, setCoupon] = useState('')
+  const [appliedCoupon, setAppliedCoupon] = useState(null)
 
   const fetchProducts = async () => {
     setLoading(true)
@@ -41,7 +43,30 @@ export default function Products() {
 
   const removeFromCart = (productId) => setCart((c) => c.filter((x) => x.productId !== productId))
 
-  const total = useMemo(() => cart.reduce((s, x) => s + x.product.price * x.qty, 0), [cart])
+  const subtotal = useMemo(() => cart.reduce((s, x) => s + x.product.price * x.qty, 0), [cart])
+  const discount = useMemo(() => {
+    if (!appliedCoupon) return 0
+    const code = appliedCoupon.toUpperCase()
+    if (code === 'SAVE10') return subtotal * 0.1
+    if (code === 'SAVE20') return subtotal * 0.2
+    return 0
+  }, [appliedCoupon, subtotal])
+  const afterDiscount = Math.max(0, subtotal - discount)
+  const tax = useMemo(() => afterDiscount * 0.08, [afterDiscount]) // 8% tax
+  const shipping = useMemo(() => {
+    const code = (appliedCoupon || '').toUpperCase()
+    if (code === 'FREESHIP' || afterDiscount >= 100) return 0
+    return cart.length > 0 ? 5 : 0
+  }, [appliedCoupon, afterDiscount, cart.length])
+  const total = afterDiscount + tax + shipping
+
+  const applyCoupon = () => {
+    const code = coupon.trim().toUpperCase()
+    if (!code) return setAppliedCoupon(null)
+    const valid = ['SAVE10', 'SAVE20', 'FREESHIP']
+    if (valid.includes(code)) setAppliedCoupon(code)
+    else setAppliedCoupon(null)
+  }
 
   const placeOrder = async () => {
     if (cart.length === 0) return
@@ -51,6 +76,8 @@ export default function Products() {
       const items = cart.map(({ productId, qty }) => ({ productId, qty }))
       const { data } = await api.post('/orders', { items })
       setCart([])
+      setAppliedCoupon(null)
+      setCoupon('')
       setMessage(`Order #${data.id} placed! Status: ${data.status}`)
     } catch (e) {
       setMessage('Failed to place order (are you logged in?)')
@@ -93,6 +120,37 @@ export default function Products() {
                 </div>
               </div>
             ))}
+
+            <div className="row" style={{ gap: 8, marginTop: 8 }}>
+              <input className="input" placeholder="Coupon (SAVE10, SAVE20, FREESHIP)" value={coupon} onChange={(e)=>setCoupon(e.target.value)} />
+              <button className="btn secondary" onClick={applyCoupon}>Apply</button>
+              {appliedCoupon && <div style={{ color: '#9db2ff' }}>Applied: {appliedCoupon}</div>}
+            </div>
+
+            <div style={{ marginTop: 8, fontSize: 14 }}>
+              <div className="row" style={{ justifyContent: 'space-between' }}>
+                <div>Subtotal</div>
+                <div>${subtotal.toFixed(2)}</div>
+              </div>
+              <div className="row" style={{ justifyContent: 'space-between' }}>
+                <div>Discount</div>
+                <div>- ${discount.toFixed(2)}</div>
+              </div>
+              <div className="row" style={{ justifyContent: 'space-between' }}>
+                <div>Tax (8%)</div>
+                <div>${tax.toFixed(2)}</div>
+              </div>
+              <div className="row" style={{ justifyContent: 'space-between' }}>
+                <div>Shipping</div>
+                <div>${shipping.toFixed(2)}</div>
+              </div>
+              <hr style={{ borderColor: '#1c254a' }} />
+              <div className="row" style={{ justifyContent: 'space-between', fontWeight: 600 }}>
+                <div>Total</div>
+                <div>${total.toFixed(2)}</div>
+              </div>
+            </div>
+
             <button className="btn" onClick={placeOrder} disabled={ordering}>
               {ordering ? 'Placing...' : 'Place Order'}
             </button>

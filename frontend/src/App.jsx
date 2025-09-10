@@ -2,7 +2,6 @@ import React from 'react'
 import { Routes, Route, NavLink, Navigate, useNavigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './auth'
 import Login from './pages/Login'
-import Chat from './pages/Chat'
 import Products from './pages/Products'
 import Offers from './pages/Offers'
 import Orders from './pages/Orders'
@@ -26,8 +25,7 @@ function Layout() {
           <div style={{ color: '#9db2ff' }}>Signed in as {user?.username}</div>
         </div>
         <Routes>
-          <Route path="/" element={<Chat />} />
-          <Route path="/products" element={<Products />} />
+          <Route path="/" element={<Products />} />
           <Route path="/offers" element={<Offers />} />
           <Route path="/orders" element={<Orders />} />
           <Route path="/profile" element={<Profile />} />
