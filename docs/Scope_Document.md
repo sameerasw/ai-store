@@ -79,3 +79,25 @@
 - Week 3–5: Core development (catalog, cart, checkout, admin).
 - Week 6: QA, UAT, fixes, go-live prep.
 - Week 7: Launch and hypercare.
+
+---
+
+## MVP Alignment Addendum (2025-09-10)
+
+To keep documentation consistent with the code in this repository, the MVP scope for this build is adjusted as follows:
+
+- In-Scope (Implemented Now)
+  - Storefront authentication: login/logout via JWT; seeded users.
+  - Product catalog: read-only list and detail. Client can search and filter by `q`, `category`, and `tags`.
+  - Offers: read-only list of active offers displayed to customers.
+  - Cart & totals (client-side): subtotal, coupons (SAVE10, SAVE20, FREESHIP), 8% tax, shipping rules (free at ≥$100 or FREESHIP), grand total.
+  - Orders: create order and view order history for the logged-in user.
+
+- Out of Scope for This Cut (Deferred)
+  - Admin portal and admin CRUD for products, offers, and orders.
+  - Checkout forms (shipping/contact) and payment processing via gateway.
+  - Emails/notifications (order confirmation, status updates).
+  - Automated order status lifecycle and tracking.
+  - Customer registration and saved addresses.
+
+Deliverables reference: See `Test_Cases.md` and `Overall_Test_Strategy_and_Design.md` section "MVP Scope Alignment Addendum" for testing and quality alignment to this scope.

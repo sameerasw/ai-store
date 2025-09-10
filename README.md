@@ -39,3 +39,8 @@ Default users (seeded):
 - JWT stored in localStorage in the browser.
 - SQLite database file stored at `backend/data/ai-store.sqlite`. Created/seeded automatically on first run.
 - Customize JWT secret via `BACKEND_JWT_SECRET` env var.
+
+## Scope Alignment (MVP)
+- Implemented now: Login/Logout (seeded users), read-only Product Catalog with search + filters (`q`, `category`, `tags`), read-only Offers, client-side Cart totals (subtotal, coupons: SAVE10/SAVE20/FREESHIP, 8% tax, shipping rules with free at ≥$100 or FREESHIP), Orders (create/list/get for current user).
+- Deferred for future: Admin portal & CRUD, checkout forms & payment processing, emails/notifications, automated order status lifecycle, user registration & saved addresses.
+- Chatbot discovery and admin UI are not included in this cut.

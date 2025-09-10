@@ -52,3 +52,13 @@ Notes
 - Add these RACI roles as custom fields or include in issue Description.
 - For dependencies, cross-reference stories in `Sprint_Planning.md` using "blocks/is blocked by" links.
 - Suggested labels: `RACI`, `Ownership`, `MVP`.
+
+---
+
+## MVP Alignment Addendum (2025-09-10)
+
+For this repository's MVP cut, the following clarifications apply:
+
+- Team composition remains 1 BA, 2 Devs, 1 QA. No dedicated DevOps, Payments, or Email specialists are required in this cut.
+- Out-of-scope workstreams (Admin CRUD, payment gateway integration, email notifications, order lifecycle automation, registration/addresses) are deferred. RACI rows referencing these remain for future phases but are not actionable in this iteration.
+- Active workstreams now: Authentication, Product Catalog (read-only), Search & Filters, Offers (read-only), Cart totals (client-side), Orders (create/list/get), Security baseline, Performance/accessibility smokes, Documentation & Test Cases.

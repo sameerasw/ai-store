@@ -1,4 +1,40 @@
 # Estimation and Task Breakdown
+---
+
+## MVP Alignment Addendum (2025-09-10)
+
+This addendum aligns estimation and tasks to the actual MVP implemented in this repository. It minimizes conflicts with earlier plans by mapping delivered features and deferring others.
+
+### Delivered (This Repo)
+- Auth (JWT login/logout; seeded users): Backend + Frontend
+- Catalog (read-only list with filters `q`, `category`, `tags`; product detail): Backend + Frontend
+- Offers (read-only active list): Backend + Frontend
+- Cart & Totals (client-side): subtotal, coupons (SAVE10, SAVE20, FREESHIP), tax 8%, shipping rules (free at ≥$100 or FREESHIP)
+- Orders (create/list/get for the logged-in user)
+- Dev experience: monorepo, single launcher `start.js`, SQLite seeding
+- Documentation: strategy addendum(s), test cases
+
+### Deferred (Not in this Cut)
+- Admin portal & CRUD (products/offers/orders)
+- Checkout forms & payment processing
+- Emails/notifications
+- Order lifecycle automation (Processing → Shipped → Delivered)
+- Registration and saved addresses
+
+### Effort Notes (High Level)
+- Backend (Express + SQLite): 2–3 d
+- Frontend (React + Vite): 3–4 d
+- Testing (manual cases + light smokes): 1–2 d
+- Documentation alignment: 0.5–1 d
+
+### Remaining Backlog (Future Iterations)
+- Harden security (rate limiting, CSRF where applicable, prod configs)
+- Admin CRUD UI + APIs; role-based screens
+- Payment gateway integration and confirmation email
+- Order status transitions and tracking fields
+- Registration, saved addresses
+- E2E automation (Playwright/Cypress) for happy path
+
 
 This plan is derived from `d:\Ecommerce1\Requirements_Specification.md` and targets three roles: Business Analysts (BA), Developers (Dev), and Test Engineers (QA). It focuses on MVP scope per MoSCoW priorities and NFRs.
 

@@ -1,4 +1,33 @@
 # Decision Analysis and Resolution (DAR)
+---
+
+## MVP Alignment Addendum (2025-09-10)
+
+This addendum documents the decisions implemented in this repository for the MVP cut, to avoid inconsistencies with earlier options discussed above.
+
+- Technology Choices (Implemented)
+  - Backend: Node.js (Express) with SQLite. Rationale: lightweight, zero external DB dependency, fast to seed and iterate for MVP.
+  - Auth: JWT-based login/logout; tokens stored on client; hashed passwords (bcrypt). Rationale: standard and sufficient for MVP.
+  - Frontend: React + Vite. Rationale: fast dev server, modern stack, minimal config for MVP speed.
+  - Data access: Parameterized SQLite queries via `sqlite3` to reduce SQLi risk.
+  - Deployment (dev): Single repo with `start.js` spawning FE/BE concurrently.
+
+- Deliberately Deferred (Not Implemented in this Cut)
+  - Admin portal and CRUD for products/offers/orders.
+  - Payment gateway integration and secure checkout forms.
+  - Email notifications and order lifecycle automation.
+  - Registration and address book.
+
+- Architectural Notes
+  - Read-only product and offer endpoints expose minimal necessary data for storefront browsing and discovery.
+  - Cart totals are computed client-side (including coupons, tax, shipping rules) to avoid premature complexity in backend pricing logic.
+  - Orders persist item lists and user association; status remains `pending` by default.
+
+- Risks & Mitigations
+  - Risk: SQLite limits for high concurrency. Mitigation: acceptable for MVP/dev; can migrate to PostgreSQL/MySQL later with a thin DAO layer.
+  - Risk: Client-side coupon logic can be spoofed. Mitigation: acceptable for demo; future backend validation planned.
+  - Risk: No payments/emails yet. Mitigation: explicitly out-of-scope; test cases and docs aligned to avoid false expectations.
+
 
 ## 1. Purpose
 - Provide a structured, traceable approach to evaluate key architecture and implementation decisions for the ecommerce MVP.

@@ -317,3 +317,26 @@ Legend
 - Confirm payment gateway and currencies before Sprint 4.
 - Sender domain DNS (SPF/DKIM/DMARC) before email tests in Sprint 3/4.
 - Tax/shipping rules may start as flat rates in MVP.
+
+---
+
+## MVP Alignment Addendum (2025-09-10)
+
+For this repository's current MVP build, we executed a reduced scope that excludes Admin CRUD, payments, emails, order lifecycle automation, and registration. The active items realized map to parts of earlier sprints:
+
+- Delivered Now
+  - Auth: Login/Logout with JWT (seeded users), no registration.
+  - Catalog (storefront): Read-only listing and product detail; search and filters (`q`, `category`, `tags`).
+  - Offers (storefront): Read-only active offers.
+  - Cart & Totals (client-side): Subtotal, coupons (SAVE10, SAVE20, FREESHIP), tax (8%), shipping rules (free at ≥$100 or FREESHIP), total.
+  - Orders: Create and view my orders.
+  - Dev Experience & Docs: Monorepo launcher, SQLite seed, test cases, strategy addendum.
+
+- Deferred to Future Iterations
+  - Admin back-office (Products/Offers/Orders CRUD), RBAC screens.
+  - Checkout forms and payment gateway integration/webhooks.
+  - Confirmation emails and status notifications.
+  - Automated status transitions and guest order lookup.
+  - Registration and saved addresses; cart persistence across sessions.
+
+Use this addendum to select only relevant stories for immediate execution and testing. See `Test_Cases.md` for the test plan aligned to this MVP.

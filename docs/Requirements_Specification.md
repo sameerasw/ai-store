@@ -1,4 +1,24 @@
 # Requirements Specification Document
+## MVP Alignment Addendum (2025-09-10)
+
+This addendum aligns the requirements to the current implementation in this repository. It preserves the original long-term requirements above while clarifying what is in-scope now vs deferred, to avoid conflicts with the code.
+
+- In-Scope (Implemented Now)
+  - Customer login/logout with JWT; seeded users (`admin`, `user`).
+  - Product catalog read-only for customers: list with filters (`q`, `category`, `tags`) and get-by-id.
+  - Offers read-only: list of active offers.
+  - Shopping cart and totals (client-side): subtotal, coupons (SAVE10, SAVE20, FREESHIP), 8% tax, shipping rules (free at ≥$100 or FREESHIP), total.
+  - Order placement and order history for the logged-in user.
+
+- Deferred/Out-of-Scope for this MVP Cut
+  - Admin CRUD for products/offers/orders and back-office UI.
+  - Checkout form (shipping/contact) and payment processing.
+  - Notification emails, order status lifecycle automation, and tracking details.
+  - Registration and saved addresses.
+
+- Test Artifacts
+  - See repository root `Test_Cases.md` for concrete test cases aligned to this scope.
+
 
 ## 1. User Roles
 - Visitor/Customer
