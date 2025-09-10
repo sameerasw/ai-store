@@ -65,19 +65,14 @@ export default function Orders() {
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                   <div>
                     <div style={{ fontWeight: 600 }}>Order #{o.id}</div>
-                    <div>Status: <span style={{ color: '#4299e1' }}>{o.status}</span></div>
+                    <div>Status: <span className="badge info">📦 {o.status}</span></div>
                   </div>
                   <button 
-                    className="btn secondary"
+                    className="btn danger"
                     onClick={() => deleteOrder(o.id)}
                     disabled={deletingOrders.has(o.id)}
-                    style={{ 
-                      backgroundColor: '#ff6b6b', 
-                      borderColor: '#ff6b6b',
-                      color: 'white'
-                    }}
                   >
-                    {deletingOrders.has(o.id) ? 'Removing...' : 'Remove'}
+                    {deletingOrders.has(o.id) ? '⏳ Removing...' : '🗑️ Remove'}
                   </button>
                 </div>
                 <div style={{ fontSize: 12, opacity: 0.8, marginTop: 4 }}>Placed: {o.created_at}</div>

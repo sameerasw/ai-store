@@ -216,23 +216,20 @@ export default function ProductDetail() {
 
             {/* Add to Cart Button */}
             <button 
-              className="btn"
+              className="btn success"
               onClick={handleAddToCart}
               disabled={addingToCart}
               style={{ width: '100%', marginBottom: 16 }}
             >
-              {addingToCart ? 'Adding to Cart...' : 'Add to Cart'}
+              {addingToCart ? '⏳ Adding to Cart...' : '🛒 Add to Cart'}
             </button>
 
             {message && (
-              <div style={{ 
-                padding: '8px 12px', 
-                backgroundColor: '#edf2f7', 
-                borderRadius: '4px',
-                color: '#4a5568',
-                textAlign: 'center'
+              <div className="badge success" style={{ 
+                textAlign: 'center',
+                width: '100%'
               }}>
-                {message}
+                ✅ {message}
               </div>
             )}
           </div>

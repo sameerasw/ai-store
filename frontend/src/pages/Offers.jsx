@@ -35,7 +35,7 @@ export default function Offers() {
           <div key={o.id} className="card">
             <div style={{ fontWeight: 600, marginBottom: 8 }}>{o.title}</div>
             <div style={{ marginBottom: 8, opacity: 0.9 }}>{o.description}</div>
-            <div style={{ color: '#38a169' }}>Save {o.discount_percent}%</div>
+            <div className="badge success">💰 Save {o.discount_percent}%</div>
           </div>
         ))}
         {offers.length === 0 && !loading && (

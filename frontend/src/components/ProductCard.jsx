@@ -59,7 +59,7 @@ export default function ProductCard({ product, onAdd }) {
             onAdd?.(product)
           }}
         >
-          Add to Cart
+          🛒 Add to Cart
         </button>
       </div>
     </div>

@@ -170,10 +170,10 @@ export default function Products() {
               </div>
             </div>
 
-            <button className="btn" onClick={placeOrder} disabled={ordering}>
-              {ordering ? 'Placing...' : 'Place Order'}
+            <button className="btn success" onClick={placeOrder} disabled={ordering}>
+              {ordering ? '⏳ Placing...' : '🛒 Place Order'}
             </button>
-            {message && <div style={{ marginTop: 8, color: '#38a169' }}>{message}</div>}
+            {message && <div className="badge success" style={{ marginTop: 8 }}>✅ {message}</div>}
           </div>
         )}
       </div>
